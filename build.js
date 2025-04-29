@@ -1,14 +1,14 @@
-import { build } from 'esbuild';
+import * as esbuild from 'esbuild';
 import { readFileSync } from 'fs';
 
 async function main() {
   const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
 
-  await build({
+  await esbuild.build({
     entryPoints: ['src/index.ts'],
     bundle: true,
     platform: 'node',
-    target: 'node18',
+    target: 'node20',
     format: 'esm',
     outfile: 'dist/index.js',
     define: {
@@ -16,10 +16,13 @@ async function main() {
       'process.env.NODE_ENV': JSON.stringify('production')
     },
     banner: {
-      js: `// Asana MCP Server v${pkg.version}\n`
+      js: `
+        // Asana MCP Server v${pkg.version}
+        import { createRequire } from 'module';
+        const require = createRequire(import.meta.url);
+      `
     },
     external: [
-      // Node.js built-in modules that should not be bundled
       'url',
       'http',
       'https',
@@ -29,8 +32,17 @@ async function main() {
       'events',
       'buffer',
       'querystring',
+      'fs',
+      'net',
       'asana',
       'jsdom',
+      'express',
+      'body-parser',
+      'depd',
+      'send',
+      'serve-static',
+      'cookie',
+      'cookie-signature'
     ]
   });
 }
