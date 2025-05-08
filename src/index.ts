@@ -1,15 +1,8 @@
 #!/usr/bin/env node
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { VERSION } from './version.js';
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-
-//////////////////////////////////////////////////////////////////////////////
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
-import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import express, { Request, Response } from "express";
-//////////////////////////////////////////////////////////////////////////////
-
-
 import { tool_handler, list_of_tools } from './tool-handler.js';
 import {
   CallToolRequestSchema,
@@ -25,7 +18,6 @@ import { createPromptHandlers } from './prompt-handler.js';
 import { createResourceHandlers } from './resource-handler.js';
 
 async function main() {
-  // const asanaToken = process.env.ASANA_ACCESS_TOKEN;
   const asanaToken = process.env.ASANA_ACCESS_TOKEN;
 
   if (!asanaToken) {
@@ -137,7 +129,7 @@ async function main() {
   
   const PORT = 3000;
   app.listen(PORT, () => {
-    console.log(`Simple SSE Server (deprecated protocol version 2024-11-05) listening on port ${PORT}`);
+    console.log(`Simple SSE Server listening on port ${PORT}`);
   });
   
   process.on('SIGINT', async () => {
@@ -156,7 +148,6 @@ async function main() {
     process.exit(0);
   });
 
-  
 }
 
 main().catch((error) => {
