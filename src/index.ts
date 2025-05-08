@@ -26,7 +26,7 @@ import { createResourceHandlers } from './resource-handler.js';
 
 async function main() {
   // const asanaToken = process.env.ASANA_ACCESS_TOKEN;
-  const asanaToken = "2/243182028191493/1210022928202212:5c6a869a656a4b9d418eff3a170fac99";
+  const asanaToken = process.env.ASANA_ACCESS_TOKEN;
 
   if (!asanaToken) {
     console.error("Please set ASANA_ACCESS_TOKEN environment variable");
